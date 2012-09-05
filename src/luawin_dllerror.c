@@ -12,8 +12,7 @@ void lua_dllerror(lua_State *L, DWORD dwErr){
 /*
 if lgk_dllerror is present in global env and equal to false dont raise error!
 */
-	lua_pushliteral(L, lgk_dllerror);
-	lua_rawget(L, LUA_GLOBALSINDEX);
+	lua_getglobal(L, lgk_dllerror);
 
 	if(lua_isrealfalse(L, -1)){
 		WIN_TRACEA("lua_dllerror:false");

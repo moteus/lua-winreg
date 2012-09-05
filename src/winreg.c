@@ -5,13 +5,10 @@
 #include <assert.h>
 #define lua_assert assert
 
-#ifndef uintptr_t
-	typedef unsigned uintptr_t;
-#endif
-
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
+#include "l52util.h"
 
 #include "stdmacro.h"
 #include "luamacro.h"
@@ -138,7 +135,7 @@ HKEY reg_aux_strtohkey(lua_State *L, const char * psz){
 	INT64 x;
 	if(atoINT64(psz, &x)){
 		WIN_TRACEA("DIGIT ROOTKEY %s", psz);
-		return (HKEY)(uintptr_t)x;	        
+		return (HKEY)(size_t)x;	        
 	}else{
 		for(pph = ph; pph->name && stricmp(psz, pph->name); pph++);
 		if(!pph->data)luaL_error(L, "invalid prefix key '%s'", psz);
@@ -283,7 +280,7 @@ BOOL reg_aux_setvalue(lua_State *L, HKEY hKey, const TCHAR * pszVal, int type, i
 		luaL_buffinit(L, &B);
 		if(lua_istable(L, i)){
 			int n;
-			int last = luaL_getn(L, i);
+			int last = lua_objlen(L, i);
 			for (n = 1; n <= last; n++) {
 				lua_rawgeti(L, i, n);
 				luaL_addstring(&B, lua_checkstring(L, -1));

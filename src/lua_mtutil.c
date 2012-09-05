@@ -1,12 +1,14 @@
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
+#include "l52util.h"
+
 /* push metatable to stack, create if not yet reg, the metatable of the table is its self */
 int lua_opentablemt(lua_State *L, const char * libname, const luaL_reg * reg, int upval){
 	/*STACK:...<upvals>#*/
 	if(luaL_newmetatable(L, libname)){
 	/*STACK:...<upvals><tablemt>#*/
-		luaL_openlib(L, NULL, reg, upval);
+		luaL_setfuncs(L, reg, upval);
 		lua_pushliteral(L, "__index");
 	/*STACK:...<tablemt><"__index">#*/
 		lua_pushvalue(L, -2);
