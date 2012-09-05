@@ -48,7 +48,10 @@ install = target('install', {
   file.group{odir=J(INSTALL_DIR, 'doc'); 
     src = J('doc','*.*');recurse=true;
   };
-  target(J(INSTALL_DIR, 'bin', winreg.target),   winreg,   CP );
+  file.group{odir=J(INSTALL_DIR, 'examples'); 
+    src = J('examples','*.*');recurse=true;
+  };
+  target(J(INSTALL_DIR, 'bin', winreg.name .. DLL_EXT),   winreg,   CP );
 })
 
 target('test', install, function()

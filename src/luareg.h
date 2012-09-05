@@ -28,9 +28,9 @@ int reg_getstrval(lua_State *L);
 int reg_getvaltype(lua_State *L);
 /* Total:22 */
 
-extern luaL_reg lreg_regobj[];
+extern luaL_Reg lreg_regobj[];
 #ifdef LUA_REG_DEFINE_EXTERNS
-luaL_reg lreg_regobj[] = {
+luaL_Reg lreg_regobj[] = {
 {"__gc",reg_close},
 {"close",reg_close},
 {"createkey",reg_createkey},
@@ -55,9 +55,9 @@ luaL_reg lreg_regobj[] = {
 {0,0}};/* Total:21 */
 #endif
 
-extern luaL_reg lreg_reglib[];
+extern luaL_Reg lreg_reglib[];
 #ifdef LUA_REG_DEFINE_EXTERNS
-luaL_reg lreg_reglib[] = {
+luaL_Reg lreg_reglib[] = {
 {"createkey",reglib_createkey},
 {"openkey",reglib_openkey},
 {0,0}};/* Total:2 */

@@ -4,7 +4,7 @@
 #include "l52util.h"
 
 /* push metatable to stack, create if not yet reg, the metatable of the table is its self */
-int lua_opentablemt(lua_State *L, const char * libname, const luaL_reg * reg, int upval){
+int lua_opentablemt(lua_State *L, const char * libname, const luaL_Reg * reg, int upval){
 	/*STACK:...<upvals>#*/
 	if(luaL_newmetatable(L, libname)){
 	/*STACK:...<upvals><tablemt>#*/
@@ -21,7 +21,7 @@ int lua_opentablemt(lua_State *L, const char * libname, const luaL_reg * reg, in
 }
 
 /* new user data with metamethods table */
-void * lua_newuserdatamt(lua_State *L, size_t cdata, const char * mtname, const luaL_reg * mtreg){
+void * lua_newuserdatamt(lua_State *L, size_t cdata, const char * mtname, const luaL_Reg * mtreg){
 	void* pdata = lua_newuserdata(L, cdata);/*STACK:...<udata># */
 	lua_opentablemt(L, mtname, mtreg, 0);	/*STACK:...<udata><tablemt># */
 	lua_setmetatable(L, -2);				/*STACK:...<udata># */
@@ -29,7 +29,7 @@ void * lua_newuserdatamt(lua_State *L, size_t cdata, const char * mtname, const 
 }
 
 /* new user data with metamethods table and upvalues */
-void * lua_newuserdatamtuv(lua_State *L, size_t cdata, const char * mtname, const luaL_reg * mtreg, int upval){
+void * lua_newuserdatamtuv(lua_State *L, size_t cdata, const char * mtname, const luaL_Reg * mtreg, int upval){
 	void* pdata;
 	/*STACK:...<upvals>#*/
 	lua_opentablemt(L, mtname, mtreg, upval);
