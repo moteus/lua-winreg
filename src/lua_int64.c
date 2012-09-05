@@ -2,8 +2,8 @@
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
-#include <luamacro.h>
-#include <stdmacro.h>
+#include "luamacro.h"
+#include "stdmacro.h"
 
 // from NSIS source code
 

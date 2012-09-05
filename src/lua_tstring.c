@@ -190,7 +190,7 @@ void lua_addutf8_from_wchar(luaL_Buffer * pB, wchar_t ch){
 }
 // gets an int character value, if string is >= 2 chars checks if utf
 wchar_t lua_checkwchar_from_utf8(lua_State *L, int i){
-	const char* psz = luaL_checkstring(L, i);
+	const unsigned char* psz = (const unsigned char *)luaL_checkstring(L, i);
     if ((psz[0] && psz[1] == 0) || psz[0] == 0) {
 		return psz[0];// single character
     }else if ((psz[0] >= 0xC0) && (psz[0] < 0xE0)

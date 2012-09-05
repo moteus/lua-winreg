@@ -5,7 +5,9 @@
 #include <assert.h>
 #define lua_assert assert
 
-#include <tchar.h>
+#ifndef uintptr_t
+	typedef unsigned uintptr_t;
+#endif
 
 #include <lua.h>
 #include <lualib.h>

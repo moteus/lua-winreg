@@ -1,5 +1,6 @@
 #include <windows.h>
 
+/*
 BOOL CALLBACK IsDebuggerPresentStub(VOID);
 BOOL (CALLBACK *IsDebuggerPresent)(VOID) = IsDebuggerPresentStub;
 
@@ -10,9 +11,9 @@ BOOL CALLBACK IsDebuggerPresentStub(VOID){
 		*(FARPROC *)&IsDebuggerPresent = fp;
 		return IsDebuggerPresent();
 	}
-	return 0;	
+	return 0;
 }
-
+*/
 
 void win_traceA(const char *pszFmt, ...){
 	CHAR tchbuf[1024] = {'$',0};
