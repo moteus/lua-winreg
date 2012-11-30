@@ -1,4 +1,4 @@
-if not WINDOWS then quit('This is only windwos module!') end
+if not WINDOWS then quit('This is only windows module!') end
 
 if LUA_VER == '5.2' then
   LUA_NEED = 'lua52'
@@ -7,6 +7,8 @@ else
   LUA_NEED = 'lua'
   LUA_DIR  = ENV.LUA_DIR
 end
+
+DYNAMIC  = DYNAMIC or false
 
 lake.define_need('unicode',function()return{
   defines = {"UNICODE"; "_UNICODE"};
@@ -33,10 +35,11 @@ winreg = c.shared{'winreg',
       IF(DEBUG, {'-Z7' , '-Od', --[['-MLd']]}, {'-O2', --[['-ML']]}),
       '-Os -DNDEBUG -s'
     );
-  libflags = IF(MSVC,IF(DEBUG, '-debug:full -debugtype:cv', '-DEBUG -OPT:REF -OPT:ICF'));
+  libflags = IF(MSVC and DEBUG, '-debug:full -debugtype:cv', '-DEBUG -OPT:REF -OPT:ICF');
   needs = {LUA_NEED,IF(UNICODE, 'unicode')};
   libs  = {"advapi32", "kernel32", "user32"};
   optimize = false;
+  dynamic  = DYNAMIC;
 }
 
 target('build',{winreg})
