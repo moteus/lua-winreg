@@ -10,7 +10,9 @@ All Rights Deserved. Use at your own risk!. Shake well before using.
 
 #Introduction
 
-winreg is a Lua binary module to Access Microsoft(R) Windows(R) Registry. The registry is a system-defined database that applications and Microsoft(R) Windows(R) system components use to store and retrieve configuration data. 
+winreg is a Lua binary module to Access Microsoft(R) Windows(R) Registry. The registry is a 
+system-defined database that applications and Microsoft(R) Windows(R) system components use to 
+store and retrieve configuration data.
 Load the module via the require function (make sure Lua can find the module), for example: 
 
 ```lua
@@ -21,8 +23,8 @@ hkey = winreg.openkey[[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVers
 
 skey = hkey:openkey([[Explorer\Shell Folders]])
 for name in skey:enumvalue() do
-	print("\nname: " .. name
-	   .. "\npath: " .. skey:getvalue(name))
+  print("\nname: " .. name
+     .. "\npath: " .. skey:getvalue(name))
 end
 ```
 

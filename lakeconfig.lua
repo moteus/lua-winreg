@@ -1,3 +1,6 @@
+J = J  or path.join
+J = IF or choose
+
 function vc_version()
   local VER = lake.compiler_version()
   MSVC_VER = ({
@@ -7,64 +10,12 @@ function vc_version()
   return MSVC_VER
 end
 
-local function arkey(t)
-  assert(type(t) == 'table')
-  local keys = {}
-  for k in pairs(t) do
-    assert(type(k) == 'number')
-    table.insert(keys, k)
-  end
-  table.sort(keys)
-  return keys
-end
-
-local function ikeys(t)
-  local keys = arkey(t)
-  local i = 0
-  return function()
-    i = i + 1
-    local k = keys[i]
-    if k == nil then return end
-    return k, t[k]
-  end
-end
-
-local function expand(arr, t)
-  if t == nil then return arr end
-
-  if type(t) ~= 'table' then
-    table.insert(arr, t)
-    return arr
-  end
-
-  for _, v in ikeys(t) do
-    expand(arr, v)
-  end
-
-  return arr
-end
-
-function L(...)
-  return expand({}, {...})
-end
-
-J = J or path.join
-
-IF = IF or lake.choose or choose
-
 function prequire(...)
   local ok, mod = pcall(require, ...)
   if ok then return mod end
 end
 
-function each_join(dir, list)
-  for i, v in ipairs(list) do
-    list[i] = path.join(dir, v)
-  end
-  return list
-end
-
-function run(file, cwd)
+function run_lua(file, cwd)
   print()
   print("run " .. file)
   if not TESTING then
@@ -78,14 +29,16 @@ function run(file, cwd)
 end
 
 function run_test(name, params)
-  local test_dir = J(ROOT, 'test')
+  local test_dir = TEST_DIR or J(ROOT, 'test')
   local cmd = J(test_dir, name)
   if params then cmd = cmd .. ' ' .. params end
-  local ok = run(cmd, test_dir)
+  local ok = run_lua(cmd, test_dir)
   print("TEST " .. cmd .. (ok and ' - pass!' or ' - fail!'))
 end
 
-function spawn(file, cwd)
+do -- spawn
+
+local function spawn_win(file, cwd)
   local winapi = prequire "winapi"
   if not winapi then
     print(file, ' error: Test needs winapi!')
@@ -99,6 +52,22 @@ function spawn(file, cwd)
     print()
   end
   return true
+end
+
+local function spawn_nix(file, cwd)
+  print("spawn " .. file)
+  if not TESTING then
+    if cwd then lake.chdir(cwd) end
+    local status, code = utils.execute( LUA_RUNNER .. file .. ' &', true )
+    if cwd then lake.chdir("<") end
+    print()
+    return status, code
+  end
+  return true
+end
+
+spawn = WINDOWS and spawn_win or spawn_nix
+
 end
 
 function as_bool(v,d)
