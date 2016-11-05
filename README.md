@@ -1,5 +1,9 @@
 #winreg
 
+[![Build status](https://ci.appveyor.com/api/projects/status/8xfyu8bow3n51jv2/branch/master?svg=true)](https://ci.appveyor.com/project/moteus/lua-winreg/branch/master)
+
+--------------------------------------------------------------------------------
+
 ##Jas Latrix
 Copyright © 2005, 2006 Jas Latrix <jastejada at yahoo dot com>
 
