@@ -9,12 +9,15 @@ environment:
 platform:
   - x64
   - x86
+  - mingw
 
 before_build:
   - set PATH=C:\Python27\Scripts;%PATH%
   - pip install hererocks
   - if /I "%platform%"=="x86" set HR_TARGET=vs_32
   - if /I "%platform%"=="x64" set HR_TARGET=vs_64
+  - if /I "%platform%"=="mingw" set HR_TARGET=mingw
+  - if /I "%platform%"=="mingw" set PATH=C:\MinGW\bin;%PATH%
   - hererocks env --%LUA% --target %HR_TARGET% -rlatest
   - call env\bin\activate
 
