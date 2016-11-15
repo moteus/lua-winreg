@@ -97,6 +97,20 @@ REGSAM reg_aux_getaccess(lua_State *L, int i){
 			case 'w': acc |= KEY_WRITE; break;
 			case 'r': acc |= KEY_READ ; break;
 			case 'a': acc |= KEY_ALL_ACCESS ; break;
+#ifdef KEY_WOW64_64KEY
+			case '6': if(*++psz == '4') {
+				// Access a 64-bit key from either a 32-bit or 64-bit application
+				acc |= KEY_WOW64_64KEY;
+				break;
+			}
+#endif
+#ifdef KEY_WOW64_32KEY
+			case '3': if(*++psz == '2') {
+				// Access a 64-bit key from either a 32-bit or 64-bit application
+				acc |= KEY_WOW64_32KEY;
+				break;
+			}
+#endif
 			default : lua_error_invalid_option(L, i);
 			}
 		}

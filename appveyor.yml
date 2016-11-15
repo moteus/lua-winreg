@@ -33,3 +33,4 @@ test_script:
   - lua test_5_1_9.lua
   - lua test_5_1_10.lua
   - lua test_5_1_13.lua
+  - lua test_5_1_14.lua
