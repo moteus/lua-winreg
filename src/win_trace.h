@@ -17,7 +17,13 @@ extern "C" {
 #endif
 
 #include <windows.h>
-#ifdef NDEBUG
+#if defined(NDEBUG) && (defined(__MINGW32__) || (defined(_MSC_VER) && (_MSC_VER >= 1400)))
+	#define WIN_TRACET(...) do {} while(0)
+	#define WIN_TRACEA(...) do {} while(0)
+	#define WIN_TRACEW(...) do {} while(0)
+	#define WIN_TRACEA_FT(...) do {} while(0)
+	#define WIN_TRACEA_ST(...) do {} while(0)
+#elif defined(NDEBUG) && defined(_MSC_VER) && (_MSC_VER < 1400)
 	#define WIN_TRACET NOP_FUNCTION
 	#define WIN_TRACEA NOP_FUNCTION
 	#define WIN_TRACEW NOP_FUNCTION

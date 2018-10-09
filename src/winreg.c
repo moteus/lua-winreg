@@ -39,6 +39,13 @@
 #define REG_QWORD                   ( 11 )  // 64-bit number
 #endif
 
+#if !defined(KEY_WOW64_32KEY) && defined(__MINGW32__)
+#define KEY_WOW64_32KEY         (0x0200)
+#endif
+#if !defined(KEY_WOW64_64KEY) && defined(__MINGW32__)
+#define KEY_WOW64_64KEY         (0x0100)
+#endif
+
 #ifndef LUA_REG_NO_DLL
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call,  LPVOID lpReserved){
 	UNUSED(hModule);
