@@ -15,6 +15,10 @@ INT64 lua_checkINT64(lua_State *L, int i);
 int atoUINT64(const char* s, UINT64 * pv);
 int atoINT64(const char* s, INT64 *pv);
 
+#ifndef MINGW_HAS_SECURE_API
+#define _ui64toa_s(val, buf, sz, radix) !_ui64toa(val, buf, radix)
+#endif
+
 #ifdef __GNUC__
 	#define CONST_9007199254740992 0x20000000000000LL
 #else
