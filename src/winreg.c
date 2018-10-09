@@ -2,6 +2,7 @@
 #	include <luamsvc.h>
 #endif
 
+#include <stdlib.h> /* _ui64toa_s */
 #include <assert.h>
 #ifndef lua_assert
 #define lua_assert assert
